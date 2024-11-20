@@ -573,14 +573,14 @@ if button == 'Sector':
 
             @st.cache_data()
             def get_json_hcm():
-                with open('https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/hcm.json', encoding='utf-8') as f:
-                    data_hcm = json.load(f)
-                features_hcm = data_hcm['features']
-                for y in range(len(features_hcm)):
-                    for x in range(len(df1_hcm.index)):
-                        if (df1_hcm.loc[x, 'commune'] == features_hcm[y]["properties"]["Name"]) and (df1_hcm.loc[x, 'district'] == features_hcm[y]["properties"]["Quan"]):
-                            features_hcm[y]["id"] = df1_hcm.loc[x,
-                                                                'commune_code']
+                url = 'https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/hcm.json'
+                data_hcm = fetch_json(url)
+                if data_hcm:
+                    features_hcm = data_hcm['features']
+                    for y in range(len(features_hcm)):
+                        for x in range(len(df1_hcm.index)):
+                            if (df1_hcm.loc[x, 'commune'] == features_hcm[y]["properties"]["Name"]) and (df1_hcm.loc[x, 'district'] == features_hcm[y]["properties"]["Quan"]):
+                                features_hcm[y]["id"] = df1_hcm.loc[x, 'commune_code']
                 return data_hcm
             data_hcm = get_json_hcm()
             px.set_mapbox_access_token(mapbox_access_token)
@@ -609,14 +609,14 @@ if button == 'Sector':
 
             @st.cache_data()
             def get_json_qn():
-                with open('https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/quang_ninh.json', encoding='utf-8') as f:
-                    data_qn = json.load(f)
-                features_qn = data_qn['features']
-                for y in range(len(features_qn)):
-                    for x in range(len(df2_qn.index)):
-                        if (df2_qn.loc[x, 'commune'] == features_qn[y]["properties"]["Name"]) and (df2_qn.loc[x, 'district'] == features_qn[y]["properties"]["Quan"]):
-                            features_qn[y]["id"] = df2_qn.loc[x,
-                                                              'commune_code']
+                url = 'https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/quang_ninh.json'
+                data_qn = fetch_json(url)
+                if data_qn:
+                    features_qn = data_qn['features']
+                    for y in range(len(features_qn)):
+                        for x in range(len(df2_qn.index)):
+                            if (df2_qn.loc[x, 'commune'] == features_qn[y]["properties"]["Name"]) and (df2_qn.loc[x, 'district'] == features_qn[y]["properties"]["Quan"]):
+                                features_qn[y]["id"] = df2_qn.loc[x, 'commune_code']
                 return data_qn
             data_qn = get_json_qn()
             px.set_mapbox_access_token(mapbox_access_token)
@@ -646,14 +646,14 @@ if button == 'Sector':
 
             @st.cache_data()
             def get_json_hanoi():
-                with open('https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/ha_noi.json', encoding='utf-8') as f:
-                    data_hn = json.load(f)
-                features_hn = data_hn['features']
-                for y in range(len(features_hn)):
-                    for x in range(len(df3_hn.index)):
-                        if (df3_hn.loc[x, 'commune'] == features_hn[y]["properties"]["Name"]) and (df3_hn.loc[x, 'district'] == features_hn[y]["properties"]["Quan"]):
-                            features_hn[y]["id"] = df3_hn.loc[x,
-                                                              'commune_code']
+                url = 'https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/ha_noi.json'
+                data_hn = fetch_json(url)
+                if data_hn:
+                    features_hn = data_hn['features']
+                    for y in range(len(features_hn)):
+                        for x in range(len(df3_hn.index)):
+                            if (df3_hn.loc[x, 'commune'] == features_hn[y]["properties"]["Name"]) and (df3_hn.loc[x, 'district'] == features_hn[y]["properties"]["Quan"]):
+                                features_hn[y]["id"] = df3_hn.loc[x, 'commune_code']
                 return data_hn
             data_hn = get_json_hanoi()
             px.set_mapbox_access_token(mapbox_access_token)
