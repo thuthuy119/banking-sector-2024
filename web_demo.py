@@ -84,8 +84,15 @@ df4 = get_data()
 
 ##---------------------------2.3. Location data ------------------------
 
-file = open(
-    'https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/hanoi.json', encoding='utf8')
+
+url = 'https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/hanoi.json'
+response = requests.get(url)
+if response.status_code == 200:
+    file = response.text  # Nội dung tệp JSON được lưu dưới dạng chuỗi
+    hanoi_json = json.loads(file)  # Chuyển đổi chuỗi JSON thành đối tượng Python
+else:
+    st.error(f"Failed to load JSON file from URL. Status code: {response.status_code}")
+    hanoi_json = None
 
 
 @st.cache_data()
