@@ -100,7 +100,7 @@ def get_json_data():
     # data = json.load(file)
     # geojson = data['level2s']
     # return geojson
-    geojson = json.load(file)
+    geojson = json.loads(file)
     del geojson['level1_id']
     del geojson['name']
     del geojson['coordinates']
