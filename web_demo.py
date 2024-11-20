@@ -89,7 +89,7 @@ url = 'https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/han
 response = requests.get(url)
 if response.status_code == 200:
     file = response.text  # Nội dung tệp JSON được lưu dưới dạng chuỗi
-    hanoi_json = json.loads(file)  # Chuyển đổi chuỗi JSON thành đối tượng Python
+    hanoi_json = json.loads(response.text)  # Chuyển đổi chuỗi JSON thành đối tượng Python
 else:
     st.error(f"Failed to load JSON file from URL. Status code: {response.status_code}")
     hanoi_json = None
