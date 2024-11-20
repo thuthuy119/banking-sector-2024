@@ -30,7 +30,7 @@ with title:
 #--------------------2. IMPORTING AND PROCESSING DATA -------------------- 
 
 #--------------------2.1. Banking data --------------------------------------
-link = ('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/bank_demographic_fix.csv')
+link = ('https://github.com/thuthuy119/banking-sector-2024/blob/main/bank_demographic_fix.csv')
 @st.cache_data()
 def get_dataset(allow_output_mutation=True):
     dataframe = pd.read_csv(link)
@@ -59,7 +59,7 @@ def movecol(df, cols_to_move=[], ref_col='', place='After'):
     return(df[seg1 + seg2 + seg3])
 
 ##----------------------2.2. Clustering data ---------------------------------------
-link2 = ('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/cluster_result_district_fixx.csv')
+link2 = ('https://github.com/thuthuy119/banking-sector-2024/blob/main/cluster_result_district_fixx.csv')
 
 
 @st.cache_data()
@@ -85,7 +85,7 @@ df4 = get_data()
 ##---------------------------2.3. Location data ------------------------
 
 file = open(
-    'C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/hanoi.json', encoding='utf8')
+    'https://github.com/thuthuy119/banking-sector-2024/blob/main/hanoi.json', encoding='utf8')
 
 
 @st.cache_data()
@@ -506,7 +506,7 @@ if button == 'Overview':
                     barmode='stack', xaxis_tickangle=-30, xaxis_title='', yaxis_title=' ')
                 st.plotly_chart(edu2bar, use_container_width=True)
 
-path = ('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/bank_fixx.csv')
+path = ('https://github.com/thuthuy119/banking-sector-2024/blob/main/bank_fixx.csv')
 
 
 @st.cache_resource
@@ -528,7 +528,7 @@ if button == 'Sector':
     st.markdown("<h6 style = 'font-style: italic;color: #CD594A';>This section shows all the communes with highest/lowest number of bank outlets. Choosing these filters below to execute demands.The choropleth map displays the location and you can find the actual data on the left.</h6>", unsafe_allow_html=True)
     st.write('')
     r1, r2, r3, r4, _ = st.columns((0.3, 0.2, 0.4, 0.15, 0.3))
-    file = ('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/hn_qn_hcm.csv') 
+    file = ('https://github.com/thuthuy119/banking-sector-2024/blob/main/hn_qn_hcm.csv') 
 
     @st.cache_data()
     def get_data():
@@ -556,7 +556,7 @@ if button == 'Sector':
         if prov == 'Thành phố Hồ Chí Minh':
             @st.cache_data()
             def get_data_hcm():
-                df = pd.read_csv('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/hn_qn_hcm.csv') 
+                df = pd.read_csv('https://github.com/thuthuy119/banking-sector-2024/blob/main/hn_qn_hcm.csv') 
                 df1_hcm = df[df['province'] ==
                              'Thành phố Hồ Chí Minh'].reset_index()
                 df1_hcm.drop(columns='index', inplace=True)
@@ -566,7 +566,7 @@ if button == 'Sector':
 
             @st.cache_data()
             def get_json_hcm():
-                with open('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/hcm.json', encoding='utf-8') as f:
+                with open('https://github.com/thuthuy119/banking-sector-2024/blob/main/hcm.json', encoding='utf-8') as f:
                     data_hcm = json.load(f)
                 features_hcm = data_hcm['features']
                 for y in range(len(features_hcm)):
@@ -593,7 +593,7 @@ if button == 'Sector':
         if prov == 'Tỉnh Quảng Ninh':
             @st.cache_data()
             def get_data_qn():
-                df = pd.read_csv('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/hn_qn_hcm.csv')
+                df = pd.read_csv('https://github.com/thuthuy119/banking-sector-2024/blob/main/hn_qn_hcm.csv')
                 df2_qn = df[df['province'] == 'Tỉnh Quảng Ninh'].reset_index()
                 df2_qn.drop(columns='index', inplace=True)
                 df2_qn['commune_code'] = df2_qn['commune_code'].astype('str')
@@ -602,7 +602,7 @@ if button == 'Sector':
 
             @st.cache_data()
             def get_json_qn():
-                with open('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/quang_ninh.json', encoding='utf-8') as f:
+                with open('https://github.com/thuthuy119/banking-sector-2024/blob/main/quang_ninh.json', encoding='utf-8') as f:
                     data_qn = json.load(f)
                 features_qn = data_qn['features']
                 for y in range(len(features_qn)):
@@ -629,7 +629,7 @@ if button == 'Sector':
         if prov == 'Thành phố Hà Nội':
             @st.cache_data()
             def get_data_hanoi():
-                df = pd.read_csv('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/hn_qn_hcm.csv')
+                df = pd.read_csv('https://github.com/thuthuy119/banking-sector-2024/blob/main/hn_qn_hcm.csv')
                 df3_hn = df[df['province'] == 'Thành phố Hà Nội'].reset_index()
                 df3_hn.drop(columns='index', inplace=True)
                 df3_hn['commune'] = df3_hn['commune'].apply(unidecode)
@@ -639,7 +639,7 @@ if button == 'Sector':
 
             @st.cache_data()
             def get_json_hanoi():
-                with open('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/ha_noi.json', encoding='utf-8') as f:
+                with open('https://github.com/thuthuy119/banking-sector-2024/blob/main/ha_noi.json', encoding='utf-8') as f:
                     data_hn = json.load(f)
                 features_hn = data_hn['features']
                 for y in range(len(features_hn)):
@@ -1312,7 +1312,7 @@ if button == 'Sector':
 
 #-----------------------------------------3.3. METHODOLOGY----------------------------------
 
-# C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/media
+# https://github.com/thuthuy119/banking-sector-2024/blob/main/media
 if button == 'Methodology':
     st.subheader('**Introduction**')
     st.write('Vietnam Index for Trade Analytics by Locations (VITAL) is a set of geo-demographic segments for Vietnam, developed by Trade Analystics Company. VITAL classifies every Vietnam ward in big cities into 41 segments based on its outstanding demographic characteristics. VITAL offers a complete set of ancillary databases and links to third-party data, allowing marketers to use data outside of their own customer files to pinpoint products and services that their best customers are most likely to use, as well as locate their best customers on the ground.')
@@ -1326,15 +1326,15 @@ if button == 'Methodology':
     st.write('')
     if list == 'All segments':
         for i in range(19,60):
-            image = Image.open('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/media/vital_brochure (1)1024_{}.jpg'.format(i))
+            image = Image.open('https://github.com/thuthuy119/banking-sector-2024/blob/main/media/vital_brochure (1)1024_{}.jpg'.format(i))
             st.image(image)
 
     if list == 'Groups':
-        image11 = Image.open('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/media/young2.png')
+        image11 = Image.open('https://github.com/thuthuy119/banking-sector-2024/blob/main/media/young2.png')
         st.image(image11)
-        image12 = Image.open('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/media/fam5.png')
+        image12 = Image.open('https://github.com/thuthuy119/banking-sector-2024/blob/main/media/fam5.png')
         st.image(image12)
-        image13 = Image.open('C:/Users/admin/OneDrive/Máy tính/Vital project/bank_app/media/mar4.png')
+        image13 = Image.open('https://github.com/thuthuy119/banking-sector-2024/blob/main/media/mar4.png')
         st.image(image13)
 
 
