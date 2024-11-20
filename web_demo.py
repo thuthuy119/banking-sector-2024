@@ -17,6 +17,15 @@ import streamlit.components.v1 as components
 from PIL import Image
 import plotly.graph_objects as go 
 
+@st.cache_data()
+def fetch_json(url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        return json.loads(response.text)  # Chuyển đổi chuỗi JSON thành đối tượng Python
+    else:
+        st.error(f"Failed to fetch JSON data from {url}. Status code: {response.status_code}")
+        return None
+
 #--------------------1. PAGE TITLE--------------------------------
 
 st.set_page_config(page_title='Bank_geo_analysis', layout="wide")
