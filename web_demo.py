@@ -1,5 +1,5 @@
 #streamlit run web_demo.py
-
+import requests
 import numpy as np
 import pandas as pd
 import streamlit as st
