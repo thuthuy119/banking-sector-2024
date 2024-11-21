@@ -1326,35 +1326,3 @@ if button == 'Sector':
 
 
 
-#-----------------------------------------3.3. METHODOLOGY----------------------------------
-
-# https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/media
-#if button == 'Methodology':
-   # st.subheader('**Introduction**')
-    #st.write('Vietnam Index for Trade Analytics by Locations (VITAL) is a set of geo-demographic segments for Vietnam, developed by Trade Analystics Company. VITAL classifies every Vietnam ward in big cities into 41 segments based on its outstanding demographic characteristics. VITAL offers a complete set of ancillary databases and links to third-party data, allowing marketers to use data outside of their own customer files to pinpoint products and services that their best customers are most likely to use, as well as locate their best customers on the ground.')
-    #st.write('These 41 segments are numbered according to their lifestage and affluence scores, then categorized into 9 groups based on the criteria of life stage and affluences.')
-    #st.subheader('**Methodology**')
-    # st.markdown("<h3 style='font-weight: bold;text-align: left; color:firebrick;'>Segment details</h3>", unsafe_allow_html=True)
-    #st.write('*Choosing filter to view. You can either choose to view by groups of segmentation divided based on the criteria of **life stage** (Younger years, Family life and Mature years), and **affluence** (High, Medium or Low) or to view all the segments belongs to them.*')
-    #lst,_,_,_ = st.columns((1,1,0.1,2))
-    #with lst:
-        #list  = st.selectbox('Level of segment', options = ['Groups', 'All segments'])
-    #st.write('')
-    #if list == 'All segments':
-        #for i in range(19,60):
-            #image = Image.open('https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/media/vital_brochure (1)1024_{}.jpg'.format(i))
-            #st.image(image)
-
-    #if list == 'Groups':
-        #image11 = Image.open('https://github.com/thuthuy119/banking-sector-2024/blob/main/young2.png')
-        #st.image(image11)
-        #image12 = Image.open('https://github.com/thuthuy119/banking-sector-2024/blob/main/fam5.png')
-        #st.image(image12)
-        #image13 = Image.open('https://github.com/thuthuy119/banking-sector-2024/blob/main/mar4.png')
-        #st.image(image13)
-
-
-#streamlit run 'C:/Users/admin/OneDrive/Máy tính/Vital project/web_demo.py'
-
-
-
