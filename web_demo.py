@@ -1346,11 +1346,11 @@ if button == 'Methodology':
             st.image(image)
 
     if list == 'Groups':
-        image11 = Image.open('https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/media/young2.png')
+        image11 = Image.open('https://github.com/thuthuy119/banking-sector-2024/blob/main/young2.png')
         st.image(image11)
-        image12 = Image.open('https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/media/fam5.png')
+        image12 = Image.open('https://github.com/thuthuy119/banking-sector-2024/blob/main/fam5.png')
         st.image(image12)
-        image13 = Image.open('https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/media/mar4.png')
+        image13 = Image.open('https://github.com/thuthuy119/banking-sector-2024/blob/main/mar4.png')
         st.image(image13)
 
 
