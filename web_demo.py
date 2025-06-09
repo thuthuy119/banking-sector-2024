@@ -158,14 +158,14 @@ mapbox_access_token = 'pk.eyJ1IjoiaGFtaWJvIiwiYSI6ImNrN2N2Ym5uYTAybzEzb256cmk2NG
 
 #----------------------------- 3. BUILDING APPLICATON---------------------------
 
-## ----------------------------Navigation panel (1. Overview, 2. Sector, 3. Methodology) --------------------------------
+## ----------------------------Navigation panel (1. Overview, 2. Sector) --------------------------------
 
 
 # st.write('<style>div.row-widget.stRadio> div{flex-direction:row;}</style>', unsafe_allow_html=True)
 st.sidebar.title('Navigation')
-st.sidebar.write('There are 3 pages in the app. Overview page shows the summary of demographical characteristics of Hanoi municipality.  \n Sector page (Banking) analyzes geographic information while the technique of conducting the process is explained in Methodology page.')
+st.sidebar.write('There are 2 pages in the app. Overview page shows the summary of demographical characteristics of Hanoi municipality.  \n Sector page (Banking) analyzes geographic information.)
 button = st.sidebar.radio('Select a page:', options=[
-                          'Overview', 'Sector', 'Methodology'])
+                          'Overview', 'Sector', ])
 
 
 ##-----------------------------------------3.1. OVERVIEW-------------------------------------
