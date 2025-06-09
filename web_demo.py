@@ -200,32 +200,32 @@ if button == 'Overview':
             group = st.selectbox(
                 '', options=df4.iloc[:, 3:10].columns.str.title(), index=2)
             charac = st.selectbox('', options=df4[group.lower()].unique())
-        with demo_map:
-            # Tính trung tâm Hà Nội
-            center_lat, center_lng = 21.0285, 105.8542
-        
-            # Tạo bản đồ folium, giới hạn max bounds trong Hà Nội
-            m = folium.Map(
-                location=[center_lat, center_lng],
-                zoom_start=11,
-                max_bounds=True,
-                control_scale=True
-            )
-        
-            # Giới hạn khu vực cho phép pan (bounding box Hà Nội)
-            m.fit_bounds([[20.85, 105.3], [21.4, 106.1]])
-        
-            # Thêm marker
-            marker_cluster = MarkerCluster().add_to(m)
-            for _, row in df_province.iterrows():
-                folium.Marker(
-                    location=[row['latitude'], row['longitude']],
-                    popup=row['district']
-                ).add_to(marker_cluster)
-        
-            # Hiển thị bản đồ bằng iframe
-            folium_static = m._repr_html_()
-            components.html(folium_static, height=500, scrolling=False)
+            with demo_map:
+                # Tính trung tâm Hà Nội
+                center_lat, center_lng = 21.0285, 105.8542
+            
+                # Tạo bản đồ folium, giới hạn max bounds trong Hà Nội
+                m = folium.Map(
+                    location=[center_lat, center_lng],
+                    zoom_start=11,
+                    max_bounds=True,
+                    control_scale=True
+                )
+            
+                # Giới hạn khu vực cho phép pan (bounding box Hà Nội)
+                m.fit_bounds([[20.85, 105.3], [21.4, 106.1]])
+            
+                # Thêm marker
+                marker_cluster = MarkerCluster().add_to(m)
+                for _, row in df_province.iterrows():
+                    folium.Marker(
+                        location=[row['latitude'], row['longitude']],
+                        popup=row['district']
+                    ).add_to(marker_cluster)
+            
+                # Hiển thị bản đồ bằng iframe
+                folium_static = m._repr_html_()
+                components.html(folium_static, height=500, scrolling=False)
         
            # with demo_map:
            #     px.set_mapbox_access_token(mapbox_access_token)
