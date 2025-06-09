@@ -216,8 +216,7 @@ if button == 'Overview':
                 fig_2.update_layout(showlegend=False,
                                      # legend=dict(
                                      #         yanchor='top', xanchor='right', y=1, x=1, orientation='v'),
-                                     mapbox_style='light', width=525, height=560, margin={"r": 0, "t": 0, "l": 0, "b": 0}, 
-                                     mapbox_bounds={
+                                     mapbox_style='light', width=525, height=560, margin={"r": 0, "t": 0, "l": 0, "b": 0}, mapbox_bounds={
                                                     "west": 102.1,    # khoảng Sơn La/Lai Châu
                                                     "east": 107.6,    # đến Quảng Ninh
                                                     "south": 19.3,    # gần Nghệ An
@@ -240,8 +239,7 @@ if button == 'Overview':
                  fig_1.update_layout(showlegend=False,
                                      # legend=dict(
                                      #         yanchor='top', xanchor='right', y=1, x=1, orientation='v'),
-                                     mapbox_style='light', width=525, height=300, margin={"r": 0, "t": 0, "l": 0, "b": 0}), 
-                                     mapbox_bounds={
+                                     mapbox_style='light', width=525, height=300, margin={"r": 0, "t": 0, "l": 0, "b": 0}), mapbox_bounds={
                                                     "west": 102.1,    # khoảng Sơn La/Lai Châu
                                                     "east": 107.6,    # đến Quảng Ninh
                                                     "south": 19.3,    # gần Nghệ An
