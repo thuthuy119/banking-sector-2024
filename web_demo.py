@@ -203,118 +203,54 @@ if button == 'Overview':
             group = st.selectbox(
                 '', options=df4.iloc[:, 3:10].columns.str.title(), index=2)
             charac = st.selectbox('', options=df4[group.lower()].unique())
-            with demo_map:
-                # Thiết lập giới hạn Hà Nội
-                center_lat, center_lng = 21.0285, 105.8542
-                bounds_sw = [20.564, 105.284]
-                bounds_ne = [21.388, 106.019]
-            
-                # Khởi tạo bản đồ
-                m = folium.Map(
-                    location=[center_lat, center_lng],
-                    zoom_start=11,
-                    max_bounds=True,
-                    control_scale=True
-                )
-                m.fit_bounds([bounds_sw, bounds_ne])
-            
-                # Vẽ ranh giới Hà Nội từ GeoJSON (sửa biến)
-                folium.GeoJson(
-                    geojson,  # Sửa từ geojson_hanoi → geojson
-                    name="Hanoi Boundary",
-                    style_function=lambda feature: {
-                        "fillColor": "#FFD700",
-                        "color": "#FF4500",
-                        "weight": 2,
-                        "dashArray": "5, 5",
-                        "fillOpacity": 0.1,
-                    }
-                ).add_to(m)
-            
-                # Sửa lỗi đặt tên cột không khớp
-                column_map = {col.title(): col for col in df4.columns[3:10]}
-                group_display = st.selectbox('', options=column_map.keys(), index=2)
-                group = column_map[group_display]
-                charac = st.selectbox('', options=df4[group].unique())
-            
-                if cp:
-                    df_same_cluster = df4[df4[group] == charac]
-                    df_cluster_geo = df2[df2['district_code'].isin(df_same_cluster['id'])]
-            
-                    marker_cluster = MarkerCluster().add_to(m)
-                    for _, row in df_cluster_geo.iterrows():
-                        folium.Marker(
-                            location=[row['latitude'], row['longitude']],
-                            popup=row['district']
-                        ).add_to(marker_cluster)
-                else:
-                    row = df_district.iloc[0]
-                    folium.Marker(
-                        location=[row['latitude'], row['longitude']],
-                        popup=row['district'],
-                        icon=folium.Icon(color="red")
-                    ).add_to(m)
-            
-                    df_info = df_district.groupby(
-                        'district')[['area', 'population', 'pop_density']].agg('sum').reset_index()
-            
-                    fact = st.expander(label='Quick facts', expanded=False)
-                    with fact:
-                        st.table(df_info.set_index('district')
-                                 .style
-                                 .format({'area': '{:.2f}', 'population': '{:.0f}', 'pop_density': '{:.2f}'})
-                                 .set_properties(**{'background-color': 'lightsalmon', 'color': 'white'})
-                                 )
-            
-                components.html(m._repr_html_(), height=550, scrolling=False)
-           # with demo_map:
-           #     px.set_mapbox_access_token(mapbox_access_token)
+           with demo_map:
+                px.set_mapbox_access_token(mapbox_access_token)
 
-                # dfff = df4[df4.index.isin(
-                #     df4[df4[group.lower()] == charac].index.unique())]
-                # fig_2 = px.choropleth_mapbox(dfff, geojson=geojson, locations='id_district', hover_name=dfff.index,
-                #                              center={'lat': dfff['lat'].values[1], 'lon': dfff['lon'].values[1]}, color='id_district',
-                #                              color_discrete_sequence=px.colors.qualitative.G10,
-                #                              zoom=10, opacity=0.5
-                #                              )
-                # fig_2.update_layout(showlegend=False,
-                #                     # legend=dict(
-                #                     #         yanchor='top', xanchor='right', y=1, x=1, orientation='v'),
-                #                     mapbox_style='light', width=525, height=560, margin={"r": 0, "t": 0, "l": 0, "b": 0})
-                # fig_2.update_traces(marker_line=dict(
-                #     width=1.5, color='LightSlateGrey'))
-                # st.plotly_chart(fig_2)
-        # else:
-        #     with demo_map:
-        #         px.set_mapbox_access_token(mapbox_access_token)
+                 dfff = df4[df4.index.isin(
+                     df4[df4[group.lower()] == charac].index.unique())]
+                 fig_2 = px.choropleth_mapbox(dfff, geojson=geojson, locations='id_district', hover_name=dfff.index,
+                                              center={'lat': dfff['lat'].values[1], 'lon': dfff['lon'].values[1]}, color='id_district',
+                                              color_discrete_sequence=px.colors.qualitative.G10,
+                                              zoom=10, opacity=0.5
+                                              )
+                 fig_2.update_layout(showlegend=False,
+                                     # legend=dict(
+                                     #         yanchor='top', xanchor='right', y=1, x=1, orientation='v'),
+                                     mapbox_style='light', width=525, height=560, margin={"r": 0, "t": 0, "l": 0, "b": 0})
+                 fig_2.update_traces(marker_line=dict(
+                     width=1.5, color='LightSlateGrey'))
+                 st.plotly_chart(fig_2)
+         else:
+             with demo_map:
+                 px.set_mapbox_access_token(mapbox_access_token)
 
-        #         dff = df4[df4.index == district_select]
-        #         fig_1 = px.choropleth_mapbox(dff, geojson=geojson, locations='id_district', hover_name=dff.index,
-        #                                      center={
-        #                                          'lat': dff['lat'].values[0], 'lon': dff['lon'].values[0]},
-        #                                      color_discrete_sequence=['Gold'],
-        #                                      zoom=11, opacity=0.5
-        #                                      )
-        #         fig_1.update_layout(showlegend=False,
-        #                             # legend=dict(
-        #                             #         yanchor='top', xanchor='right', y=1, x=1, orientation='v'),
-        #                             mapbox_style='light', width=525, height=300, margin={"r": 0, "t": 0, "l": 0, "b": 0})
-        #         fig_1.update_traces(marker_line=dict(
-        #             width=1.5, color='LightSlateGrey'))
-        #         st.plotly_chart(fig_1)
+                 dff = df4[df4.index == district_select]
+                 fig_1 = px.choropleth_mapbox(dff, geojson=geojson, locations='id_district', hover_name=dff.index,
+                                              center={
+                                                  'lat': dff['lat'].values[0], 'lon': dff['lon'].values[0]},
+                                              color_discrete_sequence=['Gold'],
+                                              zoom=11, opacity=0.5
+                                             )
+                 fig_1.update_layout(showlegend=False,
+                                     # legend=dict(
+                                     #         yanchor='top', xanchor='right', y=1, x=1, orientation='v'),
+                                     mapbox_style='light', width=525, height=300, margin={"r": 0, "t": 0, "l": 0, "b": 0})
+                 fig_1.update_traces(marker_line=dict(
+                     width=1.5, color='LightSlateGrey'))
+                 st.plotly_chart(fig_1)
 
-        #         df_info = df_district.groupby(
-        #             'district')[['area', 'population', 'pop_density']].agg('sum').reset_index()
+                 df_info = df_district.groupby(
+                     'district')[['area', 'population', 'pop_density']].agg('sum').reset_index()
 
-        #         # st.markdown("<h4 style='text-align: left; color: darkgreen;'>Quick facts</h4>", unsafe_allow_html=True)
-        #         fact = st.expander(label='Quick facts', expanded=False)
-        #         with fact:
-        #             st.table(df_info.set_index('district')
-        #                      .style
-        #                      .format({'area': '{:.2f}', 'population': '{:.0f}', 'pop_density': '{:.2f}'})
-        #                      # .background_gradient(cmap = 'Dark2')
-        #                      .set_properties(**{'background-color': 'lightsalmon', 'color': 'white'})
-        #                      )
+                 # st.markdown("<h4 style='text-align: left; color: darkgreen;'>Quick facts</h4>", unsafe_allow_html=True)
+                 fact = st.expander(label='Quick facts', expanded=False)
+                 with fact:
+                     st.table(df_info.set_index('district')
+                              .style
+                              .format({'area': '{:.2f}', 'population': '{:.0f}', 'pop_density': '{:.2f}'})
+                              # .background_gradient(cmap = 'Dark2')
+                              .set_properties(**{'background-color': 'lightsalmon', 'color': 'white'})
+                              )
     st.write('')
     st.markdown("<h4 style='text-align: left; color:firebrick;'>Graphs and charts</h4>",
                 unsafe_allow_html=True)
