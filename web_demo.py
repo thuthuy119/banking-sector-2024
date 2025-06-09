@@ -220,7 +220,7 @@ if button == 'Overview':
                 fig_2.update_traces(marker_line=dict(
                      width=1.5, color='LightSlateGrey'))
                 st.plotly_chart(fig_2)
-         else:
+        else:
              with demo_map:
                  px.set_mapbox_access_token(mapbox_access_token)
 
