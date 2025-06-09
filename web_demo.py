@@ -200,41 +200,32 @@ if button == 'Overview':
             group = st.selectbox(
                 '', options=df4.iloc[:, 3:10].columns.str.title(), index=2)
             charac = st.selectbox('', options=df4[group.lower()].unique())
-            with demo_map:
-                # Tính trung tâm Hà Nội
-                center_lat = 21.0285
-                center_lng = 105.8542
-            
-                # Tạo pydeck map và giới hạn zoom để tránh pan ra ngoài Hà Nội
-                view_state = pdk.ViewState(
-                    latitude=center_lat,
-                    longitude=center_lng,
-                    zoom=10,
-                    min_zoom=10,
-                    max_zoom=13,
-                    pitch=0,
-                    bearing=0
-                )
-            
-                # Tạo lớp hiển thị các quận của Hà Nội
-                map_layer = pdk.Layer(
-                    "ScatterplotLayer",
-                    data=df_province,
-                    get_position='[longitude, latitude]',
-                    get_color='[200, 30, 0, 160]',
-                    get_radius=300,
-                    pickable=True
-                )
-            
-                deck_map = pdk.Deck(
-                    layers=[map_layer],
-                    initial_view_state=view_state,
-                    map_style='mapbox://styles/mapbox/light-v9',
-                    tooltip={"text": "{district}"}
-                )
-            
-                st.pydeck_chart(deck_map)
-
+        with demo_map:
+            # Tính trung tâm Hà Nội
+            center_lat, center_lng = 21.0285, 105.8542
+        
+            # Tạo bản đồ folium, giới hạn max bounds trong Hà Nội
+            m = folium.Map(
+                location=[center_lat, center_lng],
+                zoom_start=11,
+                max_bounds=True,
+                control_scale=True
+            )
+        
+            # Giới hạn khu vực cho phép pan (bounding box Hà Nội)
+            m.fit_bounds([[20.85, 105.3], [21.4, 106.1]])
+        
+            # Thêm marker
+            marker_cluster = MarkerCluster().add_to(m)
+            for _, row in df_province.iterrows():
+                folium.Marker(
+                    location=[row['latitude'], row['longitude']],
+                    popup=row['district']
+                ).add_to(marker_cluster)
+        
+            # Hiển thị bản đồ bằng iframe
+            folium_static = m._repr_html_()
+            components.html(folium_static, height=500, scrolling=False)
         
            # with demo_map:
            #     px.set_mapbox_access_token(mapbox_access_token)
