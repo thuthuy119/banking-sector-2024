@@ -36,10 +36,29 @@ row0_0, row0_1, title, _ = st.columns((1, 0.3, 6, 1))
 # with row0_0:
 #     image1 = Image.open('D:/ry_practice/logo.png')
 #     st.image(image1)
+
+# Tùy chỉnh CSS để căn trái và thu nhỏ logo
+st.markdown("""
+    <style>
+        .logo-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 10px 0 10px 0;
+        }
+        .logo-container img {
+            max-height: 40px;
+        }
+    </style>
+    <div class="logo-container">
+        <img src="logoanla.png" alt="Logo">
+    </div>
+""", unsafe_allow_html=True)
+
 with title:
     st.markdown("<h2 style='font-weight: bold;text-align: center; color:firebrick;'>Business sector geo-location analysis demo</h2>", unsafe_allow_html=True)
 
-st.image("logoanla.png", width=250)
+
 #--------------------2. IMPORTING AND PROCESSING DATA -------------------- 
 
 #--------------------2.1. Banking data --------------------------------------
