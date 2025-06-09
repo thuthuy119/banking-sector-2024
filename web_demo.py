@@ -206,20 +206,20 @@ if button == 'Overview':
             with demo_map:
                 px.set_mapbox_access_token(mapbox_access_token)
 
-                 dfff = df4[df4.index.isin(
+                dfff = df4[df4.index.isin(
                      df4[df4[group.lower()] == charac].index.unique())]
-                 fig_2 = px.choropleth_mapbox(dfff, geojson=geojson, locations='id_district', hover_name=dfff.index,
+                fig_2 = px.choropleth_mapbox(dfff, geojson=geojson, locations='id_district', hover_name=dfff.index,
                                               center={'lat': dfff['lat'].values[1], 'lon': dfff['lon'].values[1]}, color='id_district',
                                               color_discrete_sequence=px.colors.qualitative.G10,
                                               zoom=10, opacity=0.5
                                               )
-                 fig_2.update_layout(showlegend=False,
+                fig_2.update_layout(showlegend=False,
                                      # legend=dict(
                                      #         yanchor='top', xanchor='right', y=1, x=1, orientation='v'),
                                      mapbox_style='light', width=525, height=560, margin={"r": 0, "t": 0, "l": 0, "b": 0})
-                 fig_2.update_traces(marker_line=dict(
+                fig_2.update_traces(marker_line=dict(
                      width=1.5, color='LightSlateGrey'))
-                 st.plotly_chart(fig_2)
+                st.plotly_chart(fig_2)
          else:
              with demo_map:
                  px.set_mapbox_access_token(mapbox_access_token)
@@ -242,7 +242,7 @@ if button == 'Overview':
                  df_info = df_district.groupby(
                      'district')[['area', 'population', 'pop_density']].agg('sum').reset_index()
 
-                 # st.markdown("<h4 style='text-align: left; color: darkgreen;'>Quick facts</h4>", unsafe_allow_html=True)
+                 st.markdown("<h4 style='text-align: left; color: darkgreen;'>Quick facts</h4>", unsafe_allow_html=True)
                  fact = st.expander(label='Quick facts', expanded=False)
                  with fact:
                      st.table(df_info.set_index('district')
