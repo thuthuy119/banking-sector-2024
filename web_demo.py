@@ -43,7 +43,6 @@ st.sidebar.image(
     "https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/assets/logo.png",
     width=120
 )
-
 #--------------------2. IMPORTING AND PROCESSING DATA -------------------- 
 
 #--------------------2.1. Banking data --------------------------------------
