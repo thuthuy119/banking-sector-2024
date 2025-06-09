@@ -15,7 +15,8 @@ from math import radians
 from unidecode import unidecode
 import streamlit.components.v1 as components
 from PIL import Image
-import plotly.graph_objects as go 
+import plotly.graph_objects as go
+from folium.plugins import MarkerCluster
 
 @st.cache_data()
 def fetch_json(url):
@@ -201,32 +202,70 @@ if button == 'Overview':
                 '', options=df4.iloc[:, 3:10].columns.str.title(), index=2)
             charac = st.selectbox('', options=df4[group.lower()].unique())
             with demo_map:
-                # Tính trung tâm Hà Nội
+                # Thiết lập giới hạn Hà Nội
                 center_lat, center_lng = 21.0285, 105.8542
+                bounds_sw = [20.564, 105.284]
+                bounds_ne = [21.388, 106.019]
             
-                # Tạo bản đồ folium, giới hạn max bounds trong Hà Nội
+                # Khởi tạo bản đồ
                 m = folium.Map(
                     location=[center_lat, center_lng],
                     zoom_start=11,
                     max_bounds=True,
                     control_scale=True
                 )
+                m.fit_bounds([bounds_sw, bounds_ne])
             
-                # Giới hạn khu vực cho phép pan (bounding box Hà Nội)
-                m.fit_bounds([[20.85, 105.3], [21.4, 106.1]])
+                # Vẽ ranh giới Hà Nội từ GeoJSON
+                folium.GeoJson(
+                    geojson_hanoi,
+                    name="Hanoi Boundary",
+                    style_function=lambda feature: {
+                        "fillColor": "#FFD700",
+                        "color": "#FF4500",
+                        "weight": 2,
+                        "dashArray": "5, 5",
+                        "fillOpacity": 0.1,
+                    }
+                ).add_to(m)
             
-                # Thêm marker
-                marker_cluster = MarkerCluster().add_to(m)
-                for _, row in df_province.iterrows():
+                if cp:
+                    st.markdown("<h5 style = 'font-style: italic;color: #CD594A;'>The map on the right is displaying districts from the same cluster in each factor group</h5>", unsafe_allow_html=True)
+                    group = st.selectbox('', options=df4.iloc[:, 3:10].columns.str.title(), index=2)
+                    charac = st.selectbox('', options=df4[group.lower()].unique())
+            
+                    df_same_cluster = df4[df4[group.lower()] == charac]
+                    df_cluster_geo = df2[df2['district_code'].isin(df_same_cluster['id'])]
+            
+                    marker_cluster = MarkerCluster().add_to(m)
+                    for _, row in df_cluster_geo.iterrows():
+                        folium.Marker(
+                            location=[row['latitude'], row['longitude']],
+                            popup=row['district']
+                        ).add_to(marker_cluster)
+            
+                else:
+                    # Hiển thị marker cho quận được chọn
+                    row = df_district.iloc[0]
                     folium.Marker(
                         location=[row['latitude'], row['longitude']],
-                        popup=row['district']
-                    ).add_to(marker_cluster)
+                        popup=row['district'],
+                        icon=folium.Icon(color="red")
+                    ).add_to(m)
             
-                # Hiển thị bản đồ bằng iframe
-                folium_static = m._repr_html_()
-                components.html(folium_static, height=500, scrolling=False)
-        
+                    df_info = df_district.groupby(
+                        'district')[['area', 'population', 'pop_density']].agg('sum').reset_index()
+            
+                    fact = st.expander(label='Quick facts', expanded=False)
+                    with fact:
+                        st.table(df_info.set_index('district')
+                                 .style
+                                 .format({'area': '{:.2f}', 'population': '{:.0f}', 'pop_density': '{:.2f}'})
+                                 .set_properties(**{'background-color': 'lightsalmon', 'color': 'white'})
+                                 )
+            
+                # Hiển thị bản đồ trong giao diện Streamlit
+                components.html(m._repr_html_(), height=550, scrolling=False)
            # with demo_map:
            #     px.set_mapbox_access_token(mapbox_access_token)
 
@@ -244,37 +283,37 @@ if button == 'Overview':
                 # fig_2.update_traces(marker_line=dict(
                 #     width=1.5, color='LightSlateGrey'))
                 # st.plotly_chart(fig_2)
-        else:
-            with demo_map:
-                px.set_mapbox_access_token(mapbox_access_token)
+        # else:
+        #     with demo_map:
+        #         px.set_mapbox_access_token(mapbox_access_token)
 
-                dff = df4[df4.index == district_select]
-                fig_1 = px.choropleth_mapbox(dff, geojson=geojson, locations='id_district', hover_name=dff.index,
-                                             center={
-                                                 'lat': dff['lat'].values[0], 'lon': dff['lon'].values[0]},
-                                             color_discrete_sequence=['Gold'],
-                                             zoom=11, opacity=0.5
-                                             )
-                fig_1.update_layout(showlegend=False,
-                                    # legend=dict(
-                                    #         yanchor='top', xanchor='right', y=1, x=1, orientation='v'),
-                                    mapbox_style='light', width=525, height=300, margin={"r": 0, "t": 0, "l": 0, "b": 0})
-                fig_1.update_traces(marker_line=dict(
-                    width=1.5, color='LightSlateGrey'))
-                st.plotly_chart(fig_1)
+        #         dff = df4[df4.index == district_select]
+        #         fig_1 = px.choropleth_mapbox(dff, geojson=geojson, locations='id_district', hover_name=dff.index,
+        #                                      center={
+        #                                          'lat': dff['lat'].values[0], 'lon': dff['lon'].values[0]},
+        #                                      color_discrete_sequence=['Gold'],
+        #                                      zoom=11, opacity=0.5
+        #                                      )
+        #         fig_1.update_layout(showlegend=False,
+        #                             # legend=dict(
+        #                             #         yanchor='top', xanchor='right', y=1, x=1, orientation='v'),
+        #                             mapbox_style='light', width=525, height=300, margin={"r": 0, "t": 0, "l": 0, "b": 0})
+        #         fig_1.update_traces(marker_line=dict(
+        #             width=1.5, color='LightSlateGrey'))
+        #         st.plotly_chart(fig_1)
 
-                df_info = df_district.groupby(
-                    'district')[['area', 'population', 'pop_density']].agg('sum').reset_index()
+        #         df_info = df_district.groupby(
+        #             'district')[['area', 'population', 'pop_density']].agg('sum').reset_index()
 
-                # st.markdown("<h4 style='text-align: left; color: darkgreen;'>Quick facts</h4>", unsafe_allow_html=True)
-                fact = st.expander(label='Quick facts', expanded=False)
-                with fact:
-                    st.table(df_info.set_index('district')
-                             .style
-                             .format({'area': '{:.2f}', 'population': '{:.0f}', 'pop_density': '{:.2f}'})
-                             # .background_gradient(cmap = 'Dark2')
-                             .set_properties(**{'background-color': 'lightsalmon', 'color': 'white'})
-                             )
+        #         # st.markdown("<h4 style='text-align: left; color: darkgreen;'>Quick facts</h4>", unsafe_allow_html=True)
+        #         fact = st.expander(label='Quick facts', expanded=False)
+        #         with fact:
+        #             st.table(df_info.set_index('district')
+        #                      .style
+        #                      .format({'area': '{:.2f}', 'population': '{:.0f}', 'pop_density': '{:.2f}'})
+        #                      # .background_gradient(cmap = 'Dark2')
+        #                      .set_properties(**{'background-color': 'lightsalmon', 'color': 'white'})
+        #                      )
     st.write('')
     st.markdown("<h4 style='text-align: left; color:firebrick;'>Graphs and charts</h4>",
                 unsafe_allow_html=True)
