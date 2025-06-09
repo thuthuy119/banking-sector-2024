@@ -40,7 +40,7 @@ with title:
     st.markdown("<h2 style='font-weight: bold;text-align: center; color:firebrick;'>Business sector geo-location analysis demo</h2>", unsafe_allow_html=True)
 
 st.sidebar.image(
-    "https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/assets/logo.png",
+    "https://github.com/thuthuy119/banking-sector-2024/blob/main/logotrade-1.png",
     width=120
 )
 #--------------------2. IMPORTING AND PROCESSING DATA -------------------- 
