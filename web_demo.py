@@ -216,9 +216,9 @@ if button == 'Overview':
                 )
                 m.fit_bounds([bounds_sw, bounds_ne])
             
-                # Vẽ ranh giới Hà Nội từ GeoJSON
+                # Vẽ ranh giới Hà Nội từ GeoJSON (sửa biến)
                 folium.GeoJson(
-                    geojson_hanoi,
+                    geojson,  # Sửa từ geojson_hanoi → geojson
                     name="Hanoi Boundary",
                     style_function=lambda feature: {
                         "fillColor": "#FFD700",
@@ -229,12 +229,14 @@ if button == 'Overview':
                     }
                 ).add_to(m)
             
-                if cp:
-                    st.markdown("<h5 style = 'font-style: italic;color: #CD594A;'>The map on the right is displaying districts from the same cluster in each factor group</h5>", unsafe_allow_html=True)
-                    group = st.selectbox('', options=df4.iloc[:, 3:10].columns.str.title(), index=2)
-                    charac = st.selectbox('', options=df4[group.lower()].unique())
+                # Sửa lỗi đặt tên cột không khớp
+                column_map = {col.title(): col for col in df4.columns[3:10]}
+                group_display = st.selectbox('', options=column_map.keys(), index=2)
+                group = column_map[group_display]
+                charac = st.selectbox('', options=df4[group].unique())
             
-                    df_same_cluster = df4[df4[group.lower()] == charac]
+                if cp:
+                    df_same_cluster = df4[df4[group] == charac]
                     df_cluster_geo = df2[df2['district_code'].isin(df_same_cluster['id'])]
             
                     marker_cluster = MarkerCluster().add_to(m)
@@ -243,9 +245,7 @@ if button == 'Overview':
                             location=[row['latitude'], row['longitude']],
                             popup=row['district']
                         ).add_to(marker_cluster)
-            
                 else:
-                    # Hiển thị marker cho quận được chọn
                     row = df_district.iloc[0]
                     folium.Marker(
                         location=[row['latitude'], row['longitude']],
@@ -264,7 +264,6 @@ if button == 'Overview':
                                  .set_properties(**{'background-color': 'lightsalmon', 'color': 'white'})
                                  )
             
-                # Hiển thị bản đồ trong giao diện Streamlit
                 components.html(m._repr_html_(), height=550, scrolling=False)
            # with demo_map:
            #     px.set_mapbox_access_token(mapbox_access_token)
