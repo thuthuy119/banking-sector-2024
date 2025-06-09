@@ -38,7 +38,7 @@ row0_0, row0_1, title, _ = st.columns((1, 0.3, 6, 1))
 #     st.image(image1)
 
 # Tùy chỉnh CSS để căn trái và thu nhỏ logo
-st.sidebar.image("logoanla.png", width=120)
+st.sidebar.image("logoanla.png", width=200)
 
 with title:
     st.markdown("<h2 style='font-weight: bold;text-align: center; color:firebrick;'>Business sector geo-location analysis demo</h2>", unsafe_allow_html=True)
