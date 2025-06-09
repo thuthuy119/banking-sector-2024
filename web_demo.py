@@ -39,6 +39,12 @@ row0_0, row0_1, title, _ = st.columns((1, 0.3, 6, 1))
 with title:
     st.markdown("<h2 style='font-weight: bold;text-align: center; color:firebrick;'>Business sector geo-location analysis demo</h2>", unsafe_allow_html=True)
 
+st.logo(
+    image="https://raw.githubusercontent.com/thuthuy119/banking-sector-2024/main/assets/logo.png",
+    size="medium",
+    link="https://github.com/thuthuy119/banking-sector-2024"
+)
+
 #--------------------2. IMPORTING AND PROCESSING DATA -------------------- 
 
 #--------------------2.1. Banking data --------------------------------------
