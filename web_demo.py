@@ -15,7 +15,9 @@ from math import radians
 from unidecode import unidecode
 import streamlit.components.v1 as components
 from PIL import Image
+import folium
 import plotly.graph_objects as go
+
 from folium.plugins import MarkerCluster
 
 @st.cache_data()
