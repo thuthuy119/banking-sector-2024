@@ -39,10 +39,7 @@ row0_0, row0_1, title, _ = st.columns((1, 0.3, 6, 1))
 with title:
     st.markdown("<h2 style='font-weight: bold;text-align: center; color:firebrick;'>Business sector geo-location analysis demo</h2>", unsafe_allow_html=True)
 
-st.sidebar.image(
-    "https://github.com/thuthuy119/banking-sector-2024/blob/main/logotrade-1.png",
-    width=120
-)
+st.image("logoanla.png", width=250)
 #--------------------2. IMPORTING AND PROCESSING DATA -------------------- 
 
 #--------------------2.1. Banking data --------------------------------------
@@ -163,7 +160,7 @@ mapbox_access_token = 'pk.eyJ1IjoiaGFtaWJvIiwiYSI6ImNrN2N2Ym5uYTAybzEzb256cmk2NG
 
 # st.write('<style>div.row-widget.stRadio> div{flex-direction:row;}</style>', unsafe_allow_html=True)
 st.sidebar.title('Navigation')
-st.sidebar.write('There are 2 pages in the app. Overview page shows the summary of demographical characteristics of Hanoi municipality.  \n Sector page (Banking) analyzes geographic information.)
+st.sidebar.write('There are 2 pages in the app. Overview page shows the summary of demographical characteristics of Hanoi municipality.  \n Sector page (Banking) analyzes geographic information.')
 button = st.sidebar.radio('Select a page:', options=[
                           'Overview', 'Sector', ])
 
