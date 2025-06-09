@@ -201,22 +201,58 @@ if button == 'Overview':
                 '', options=df4.iloc[:, 3:10].columns.str.title(), index=2)
             charac = st.selectbox('', options=df4[group.lower()].unique())
             with demo_map:
-                px.set_mapbox_access_token(mapbox_access_token)
+                # Tính trung tâm Hà Nội
+                center_lat = 21.0285
+                center_lng = 105.8542
+            
+                # Tạo pydeck map và giới hạn zoom để tránh pan ra ngoài Hà Nội
+                view_state = pdk.ViewState(
+                    latitude=center_lat,
+                    longitude=center_lng,
+                    zoom=10,
+                    min_zoom=10,
+                    max_zoom=13,
+                    pitch=0,
+                    bearing=0
+                )
+            
+                # Tạo lớp hiển thị các quận của Hà Nội
+                map_layer = pdk.Layer(
+                    "ScatterplotLayer",
+                    data=df_province,
+                    get_position='[longitude, latitude]',
+                    get_color='[200, 30, 0, 160]',
+                    get_radius=300,
+                    pickable=True
+                )
+            
+                deck_map = pdk.Deck(
+                    layers=[map_layer],
+                    initial_view_state=view_state,
+                    map_style='mapbox://styles/mapbox/light-v9',
+                    tooltip={"text": "{district}"}
+                )
+            
+                st.pydeck_chart(deck_map)
 
-                dfff = df4[df4.index.isin(
-                    df4[df4[group.lower()] == charac].index.unique())]
-                fig_2 = px.choropleth_mapbox(dfff, geojson=geojson, locations='id_district', hover_name=dfff.index,
-                                             center={'lat': dfff['lat'].values[1], 'lon': dfff['lon'].values[1]}, color='id_district',
-                                             color_discrete_sequence=px.colors.qualitative.G10,
-                                             zoom=10, opacity=0.5
-                                             )
-                fig_2.update_layout(showlegend=False,
-                                    # legend=dict(
-                                    #         yanchor='top', xanchor='right', y=1, x=1, orientation='v'),
-                                    mapbox_style='light', width=525, height=560, margin={"r": 0, "t": 0, "l": 0, "b": 0})
-                fig_2.update_traces(marker_line=dict(
-                    width=1.5, color='LightSlateGrey'))
-                st.plotly_chart(fig_2)
+        
+           # with demo_map:
+           #     px.set_mapbox_access_token(mapbox_access_token)
+
+                # dfff = df4[df4.index.isin(
+                #     df4[df4[group.lower()] == charac].index.unique())]
+                # fig_2 = px.choropleth_mapbox(dfff, geojson=geojson, locations='id_district', hover_name=dfff.index,
+                #                              center={'lat': dfff['lat'].values[1], 'lon': dfff['lon'].values[1]}, color='id_district',
+                #                              color_discrete_sequence=px.colors.qualitative.G10,
+                #                              zoom=10, opacity=0.5
+                #                              )
+                # fig_2.update_layout(showlegend=False,
+                #                     # legend=dict(
+                #                     #         yanchor='top', xanchor='right', y=1, x=1, orientation='v'),
+                #                     mapbox_style='light', width=525, height=560, margin={"r": 0, "t": 0, "l": 0, "b": 0})
+                # fig_2.update_traces(marker_line=dict(
+                #     width=1.5, color='LightSlateGrey'))
+                # st.plotly_chart(fig_2)
 
         else:
 
